@@ -1,11 +1,16 @@
 # Project Setup
 
-npx create-react-app formik-yup-project
+`npx create-react-app formik-yup-project`
 
 ## Installations
 
 `npm install @mui/material @emotion/react @emotion/styled`
+
 `npm i @mui/icons-material`
+
+`npm install formik --save`
+
+`npm install yup`
 
 ### `npm start`
 
