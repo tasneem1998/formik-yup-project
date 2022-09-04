@@ -6,12 +6,18 @@ import Button from "@mui/material/Button";
 import { Formik, Form } from "formik"
 import TextFieldMui from './fields/TextFieldWrapper';
 import * as Yup from 'yup';
+import SelectWrapper from './fields/SelectWrapper';
+import { countries } from '../config/data';
 
-const INITIAL_STATE = {
+const INITIAL_FORM_STATE = {
     first_name: "",
     last_name: "",
     email: "",
-    phone: ""
+    phone: "",
+    address_line1: "",
+    address_line2: "",
+    state: "",
+    country: ""
 }
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -27,6 +33,13 @@ const FORM_VALIDATION = Yup.object().shape({
     phone: Yup.number()
         .typeError("Invalid Phone")
         .required("Required"),
+    address_line1: Yup.string()
+        .required("Required"),
+    address_line2: Yup.string()
+        .required("Required"),
+    state: Yup.string(),
+    country: Yup.string()
+        .required("Required")
 })
 
 
@@ -36,11 +49,11 @@ const BasicForm = () => {
             <Container maxWidth="md" sx={{ my: 4 }}>
                 <Formik
                     initialValues={{
-                        ...INITIAL_STATE
+                        ...INITIAL_FORM_STATE
                     }}
                     validationSchema={FORM_VALIDATION}
-                    onSubmit={(values)=>{
-                        console.log(values,"val")
+                    onSubmit={(values) => {
+                        console.log(values, "val")
                     }}
                 >
                     <Form>
@@ -51,22 +64,60 @@ const BasicForm = () => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={6}>
-                                <TextFieldMui name="first_name" label="First Name"/>
+                                <TextFieldMui
+                                    name="first_name"
+                                    label="First Name"
+                                />
                             </Grid>
                             <Grid item xs={6}>
-                                <TextFieldMui name="last_name" label="Last Name"/>
+                                <TextFieldMui
+                                    name="last_name"
+                                    label="Last Name"
+                                />
                             </Grid>
                             <Grid item xs={12}>
-                                <TextFieldMui name="email" label="Email"/>
+                                <TextFieldMui
+                                    name="email"
+                                    label="Email"
+                                />
                             </Grid>
                             <Grid item xs={12}>
-                                <TextFieldMui name="phone" label="Phone Number"/>
+                                <TextFieldMui
+                                    name="phone"
+                                    label="Phone Number"
+                                />
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>
                                     Adress
                                 </Typography>
                             </Grid>
+                            <Grid item xs={12}>
+                                <TextFieldMui
+                                    name="address_line1"
+                                    label="Address Line1"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextFieldMui
+                                    name="address_line2"
+                                    label="Address Line2"
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextFieldMui
+                                    name="state"
+                                    label="State"
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <SelectWrapper
+                                    name="country"
+                                    label="Country"
+                                    options={countries}
+                                />
+                            </Grid>
+
                             <Grid item xs={12}>
                                 <Typography>
                                     Booking Information
