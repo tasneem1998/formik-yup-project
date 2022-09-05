@@ -2,22 +2,28 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import { Formik, Form } from "formik"
-import TextFieldMui from './fields/TextFieldWrapper';
+import TextFieldMui from './controls/TextFieldWrapper';
 import * as Yup from 'yup';
-import SelectWrapper from './fields/SelectWrapper';
+import SelectWrapper from './controls/SelectWrapper';
 import { countries } from '../config/data';
+import DateTimeWrapper from './controls/DateTimeWrapper';
+import CheckboxWrapper from './controls/CheckboxWrapper';
+import SubmitButton from './controls/SubmitButton';
 
 const INITIAL_FORM_STATE = {
     first_name: "",
     last_name: "",
     email: "",
     phone: "",
-    address_line1: "",
-    address_line2: "",
+    address: "",
+    city: "",
     state: "",
-    country: ""
+    country: "",
+    arrival_date: "",
+    departure_date: "",
+    message: "",
+    tnc: false
 }
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -33,13 +39,20 @@ const FORM_VALIDATION = Yup.object().shape({
     phone: Yup.number()
         .typeError("Invalid Phone")
         .required("Required"),
-    address_line1: Yup.string()
+    address: Yup.string()
         .required("Required"),
-    address_line2: Yup.string()
-        .required("Required"),
+    city: Yup.string(),
     state: Yup.string(),
     country: Yup.string()
-        .required("Required")
+        .required("Required"),
+    arrival_date: Yup.date()
+        .required("Required"),
+    departure_date: Yup.date()
+        .required("Required"),
+    message: Yup.string(),
+    tnc: Yup.boolean()
+        .oneOf([true], "You must agree") // no use not showing just red color
+        .required("Required"),
 })
 
 
@@ -89,19 +102,19 @@ const BasicForm = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>
-                                    Adress
+                                    Address
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextFieldMui
-                                    name="address_line1"
-                                    label="Address Line1"
+                                    name="address"
+                                    label="Address"
                                 />
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <TextFieldMui
-                                    name="address_line2"
-                                    label="Address Line2"
+                                    name="city"
+                                    label="City"
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -110,7 +123,7 @@ const BasicForm = () => {
                                     label="State"
                                 />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12}>
                                 <SelectWrapper
                                     name="country"
                                     label="Country"
@@ -123,8 +136,36 @@ const BasicForm = () => {
                                     Booking Information
                                 </Typography>
                             </Grid>
+                            <Grid item xs={6}>
+                                <DateTimeWrapper
+                                    name="arrival_date"
+                                    label="Arrival Date"
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <DateTimeWrapper
+                                    name="departure_date"
+                                    label="Departure Date"
+                                />
+                            </Grid>
                             <Grid item xs={12}>
-                                <Button variant="contained" type="submit">Submit</Button>
+                                <TextFieldMui
+                                    name="message"
+                                    label="Message"
+                                    multiline={true}
+                                    rows={3}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <CheckboxWrapper
+                                    name="tnc"
+                                    legend="Accespt Terms Condition"
+                                    label="I agree"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <SubmitButton label="Submit" />
                             </Grid>
                         </Grid>
 
